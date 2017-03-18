@@ -1,0 +1,121 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:c="http://java.sun.com/jsp/jstl/core"
+	xmlns:p="http://primefaces.org/ui">
+
+<h:head>
+	<title>Welcome to Lazy Loading</title>
+</h:head>
+
+<body>
+	<ui:composition xmlns:ui="http://java.sun.com/jsf/facelets" template="/resources/plantilla/plantilla.xhtml">
+		<f:param></f:param>
+		<ui:define name="content">
+			
+			<p:ajaxStatus style="width:16px;height:16px;" id="ajaxStatusPanel">
+				<f:facet name="start">
+					<h:graphicImage library="images" name="ajaxloading.gif" />
+				</f:facet>
+				<f:facet name="complete">
+					<h:outputText value="" />
+				</f:facet>
+			</p:ajaxStatus>
+			
+			<h:form prependId="false" enctype="multipart/form-data">
+				<p:messages id="mess" showDetail="true" autoUpdate="true" closable="true" />
+				<p:growl id="messages" showDetail="true" />
+				<p:dataTable id="clientes" value="#{listarClientesController.listaClienteVO}" var="cliente" editable="true" rowKey="#{cliente.idCliente}"
+                 		selection="#{listarClientesController.clienteVO}" selectionMode="single">
+					<f:facet name="header">
+						Lista de Clientes
+					</f:facet>
+					<p:column headerText="Identificación">
+						<p:cellEditor>
+							<f:facet name="output">
+								<h:outputText value="#{cliente.identificacion}" />
+							</f:facet>
+							<f:facet name="input">
+								<p:inputText value="#{cliente.identificacion}" />
+							</f:facet>
+						</p:cellEditor>
+					</p:column>
+					
+					<p:column headerText="Nombres">
+						<p:cellEditor>
+							<f:facet name="output">
+								<h:outputText value="#{cliente.nombres}" />
+							</f:facet>
+							<f:facet name="input">
+								<p:inputText value="#{cliente.nombres}" />
+							</f:facet>
+						</p:cellEditor>
+					</p:column>
+					
+					<p:column headerText="Apellidos">
+						<p:cellEditor>
+							<f:facet name="output">
+								<h:outputText value="#{cliente.apellidos}" />
+							</f:facet>
+							<f:facet name="input">
+								<p:inputText value="#{cliente.apellidos}" />
+							</f:facet>
+						</p:cellEditor>
+					</p:column>
+					
+					<p:column headerText="Dirección">
+						<p:cellEditor>
+							<f:facet name="output">
+								<h:outputText value="#{cliente.direccion}" />
+							</f:facet>
+							<f:facet name="input">
+								<p:inputText value="#{cliente.direccion}" />
+							</f:facet>
+						</p:cellEditor>
+					</p:column>
+					
+					<p:column headerText="Teléfono">
+						<p:cellEditor>
+							<f:facet name="output">
+								<h:outputText value="#{cliente.telefono}" />
+							</f:facet>
+							<f:facet name="input">
+								<p:inputText value="#{cliente.telefono}" />
+							</f:facet>
+						</p:cellEditor>
+					</p:column>
+					
+					<p:column headerText="E-Mail">
+						<p:cellEditor>
+							<f:facet name="output">
+								<h:outputText value="#{cliente.email}" />
+							</f:facet>
+							<f:facet name="input">
+								<p:inputText value="#{cliente.email}" />
+							</f:facet>
+						</p:cellEditor>
+					</p:column>
+
+					<f:facet name="footer">
+					</f:facet>
+					
+					<p:column headerText="Opciones" style="width:50px">
+						<p:rowEditor />
+					</p:column>
+					<p:ajax event="rowEdit" listener="#{clienteController.editClientes}">
+					</p:ajax>
+
+				</p:dataTable>
+				
+				<p:contextMenu for="clientes">
+			        <p:menuitem value="Delete" update="clientes" icon="ui-icon-close" actionListener="#{listarClientesController.eliminarCliente}"/>
+			    </p:contextMenu>
+    
+			</h:form>
+
+		</ui:define>
+	</ui:composition>
+</body>
+</html>
